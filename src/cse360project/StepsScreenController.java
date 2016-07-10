@@ -1,28 +1,32 @@
 
 package cse360project;
 
-import java.lang.*;
 import java.net.URL;
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.DatePicker;
+import javafx.scene.Scene;
+import javafx.scene.chart.XYChart;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class CaloriesScreenController implements Initializable, TransitionController 
+
+
+public class StepsScreenController implements Initializable, TransitionController 
 {
     ScreensController myController;
 
@@ -31,78 +35,87 @@ public class CaloriesScreenController implements Initializable, TransitionContro
     public static String url                = "jdbc:mysql://168.62.213.183:3306/";
     public static String dbName             = "mydb";
     public static String driver             = "com.mysql.jdbc.Driver";
-    public static String databaseUserName   = "CSE360Team";
-    public static String databasePassword   = "FitnessTeam#360";
+    public static String databaseUserName   = "";
+    public static String databasePassword   = "";
     
-    public String numberOfCalories;
-    public String caloriesDate;
- 
+    public String numberOfSteps;
+    public String stepsDate;
+    
     @FXML
-    private Button CaloriesSaveButton;
+    private Button StepsSaveButton;
     @FXML
-    private Button CaloriesCancelButton;
+    private TextField NumberOfStepsField;
     @FXML
-    private TextField CaloriesTextField;
-    @FXML
-    private DatePicker CaloriesDatePicker;
+    private Button StepsCancelButton;
     @FXML
     private Label UsernameDisplayLabel;
     @FXML
-    public LineChart<String, Number> CaloriesGraph;
+    private DatePicker StepsDatePicker;
+    @FXML
+    public LineChart<String, Number> StepsGraph;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
+        // Displays username in the top right corner of the scene
         UsernameDisplayLabel.setText(LoginScreenController.userName);
-        
+        // Code that displays steps data on the chart
         ObservableList<XYChart.Series<String, Number>> lineChartData = FXCollections.observableArrayList();
         LineChart.Series<String, Number> series = new LineChart.Series<String, Number>();
-        series.setName("Calories");
+        series.setName("Steps");
  
         String tempDate;
-        int tempCalories;
+        int tempSteps;
         // For some reason it won't let me use a for/foreach loop to add 
+        
         tempDate = MainScreenController.dateList.get(4);
-        tempCalories = Integer.parseInt(MainScreenController.caloriesList.get(4));
-        series.getData().add(new XYChart.Data(tempDate, tempCalories));
+        tempSteps = Integer.parseInt(MainScreenController.stepsList.get(4));
+        series.getData().add(new XYChart.Data(tempDate, tempSteps));
         
         tempDate = MainScreenController.dateList.get(3);
-        tempCalories = Integer.parseInt(MainScreenController.caloriesList.get(3));
-        series.getData().add(new XYChart.Data(tempDate, tempCalories));
+        tempSteps = Integer.parseInt(MainScreenController.stepsList.get(3));
+        series.getData().add(new XYChart.Data(tempDate, tempSteps));
         
         tempDate = MainScreenController.dateList.get(2);
-        tempCalories = Integer.parseInt(MainScreenController.caloriesList.get(2));
-        series.getData().add(new XYChart.Data(tempDate, tempCalories));
+        tempSteps = Integer.parseInt(MainScreenController.stepsList.get(2));
+        series.getData().add(new XYChart.Data(tempDate, tempSteps));
         
         tempDate = MainScreenController.dateList.get(1);
-        tempCalories = Integer.parseInt(MainScreenController.caloriesList.get(1));
-        series.getData().add(new XYChart.Data(tempDate, tempCalories));
+        tempSteps = Integer.parseInt(MainScreenController.stepsList.get(1));
+        series.getData().add(new XYChart.Data(tempDate, tempSteps));
         
         tempDate = MainScreenController.dateList.get(0);
-        tempCalories= Integer.parseInt(MainScreenController.caloriesList.get(0));
-        series.getData().add(new XYChart.Data(tempDate, tempCalories));
+        tempSteps = Integer.parseInt(MainScreenController.stepsList.get(0));
+        series.getData().add(new XYChart.Data(tempDate, tempSteps));
         
         lineChartData.add(series);
         
-        CaloriesGraph.setData(lineChartData);
-        CaloriesGraph.createSymbolsProperty();
+        StepsGraph.setData(lineChartData);
+        StepsGraph.createSymbolsProperty();
     }  
-    
+
     @Override
     public void setScreenParent(ScreensController screenParent)
     {
         myController = screenParent;
     }
-    
+      
+   @FXML 
     private void goToMainScreen()
     {
+        ScreensFramework.GlobalRefresh();
         myController.setScreen(ScreensFramework.mainScreenID);
     }
+    
     @FXML
     private void saveButtonPressed(ActionEvent event)
     {
-        numberOfCalories = CaloriesTextField.getText();
-        caloriesDate     = CaloriesDatePicker.getValue().toString();
+        // Sets numberOfSteps variable equal to the value contained in the field
+        numberOfSteps = NumberOfStepsField.getText();
+        
+        // Sets stepsDate equal to the string value of the date object that was 
+        // selected in the date picker
+        stepsDate      = StepsDatePicker.getValue().toString();
         
         try 
         {  
@@ -127,28 +140,28 @@ public class CaloriesScreenController implements Initializable, TransitionContro
             if (connection != null) 
             {
                 // Checks to see if there is already an entry in the database for the user on the spcified date
-                String caloriesQuery = "SELECT * FROM mydb.userData WHERE user_name = '"+ LoginScreenController.userName +"' AND date = '" + caloriesDate + "'";
-                PreparedStatement checkStatement = connection.prepareStatement(caloriesQuery);
+                String stepsQuery = "SELECT * FROM mydb.userData WHERE user_name = '"+ LoginScreenController.userName +"' AND date = '" + stepsDate + "'";
+                PreparedStatement checkStatement = connection.prepareStatement(stepsQuery);
                 ResultSet result = checkStatement.executeQuery();
                 // If there is already an entry for that date, the UPDATE statement is used so that it will just update the exiting entry for that 
                 // date instead of creating a whole new entry with the same date.  --->NOTE: Spaces are important <----
                 if(result.next())
                 {
-                    String caloriesUpdate = "UPDATE mydb.userData SET calories = '" + numberOfCalories +"' WHERE user_name = '" + 
-                                                                                LoginScreenController.userName + "' AND date = '" + caloriesDate + "'"; 
+                    String stepsUpdate = "UPDATE mydb.userData SET steps = '" + numberOfSteps +"' WHERE user_name = '" + 
+                                                                                LoginScreenController.userName + "' AND date = '" + stepsDate + "'"; 
                     Statement updateStatement = connection.createStatement();
-                    updateStatement.executeUpdate(caloriesUpdate);
+                    updateStatement.executeUpdate(stepsUpdate);
                     goToMainScreen();
                     connection.close();
                 }
                 // If there is not an entry already in the database for the specified date, the INSERT statement is used to create a new entry in the database.
                 else
                 {
-                    String caloriesInsert = "INSERT INTO mydb.userData (user_name, date, calories ) VALUES (\""+ LoginScreenController.userName+ "\",\"" + 
-                                                                                                           caloriesDate + "\", \"" + numberOfCalories +"\")";
+                    String stepsInsert = "INSERT INTO mydb.userData (user_name, date, steps ) VALUES (\""+ LoginScreenController.userName+ "\",\"" + 
+                                                                                                           stepsDate + "\", \"" + numberOfSteps +"\")";
                     Statement insertStatement = connection.createStatement();
                     // Executes the statement and writes to the datebase.
-                    insertStatement.executeUpdate(caloriesInsert);
+                    insertStatement.executeUpdate(stepsInsert);
                     // Returns to the main screen 
                     goToMainScreen();
                     // Closes the connection to the database.
@@ -169,7 +182,17 @@ public class CaloriesScreenController implements Initializable, TransitionContro
         // Refreshes all of the scenes so that newly entered data will be reflected  
         ScreensFramework.GlobalRefresh();
     }
-    
+    public void showEntryError()
+    {
+        Stage newStage = new Stage();
+        VBox comp = new VBox();
+        Label loginError = new Label("Please Enter a Number");
+        comp.getChildren().add(loginError);
+        Scene stageScene = new Scene(comp, 300, 300);
+        newStage.setScene(stageScene);
+        newStage.show();
+    }
+
     @FXML
     private void cancelButtonPressed(ActionEvent event)
     {

@@ -38,8 +38,8 @@ public class PhysicalActivityScreenController implements Initializable, Transiti
     public static String url                = "jdbc:mysql://168.62.213.183:3306/";
     public static String dbName             = "mydb";
     public static String driver             = "com.mysql.jdbc.Driver";
-    public static String databaseUserName   = "CSE360Team";
-    public static String databasePassword   = "FitnessTeam#360";
+    public static String databaseUserName   = "";
+    public static String databasePassword   = "";
     
     
     public String physicalActivityType, physicalDate, minutes;
