@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cse360project.ProfileScreenController">
+<children>
+<Label fx:id="UsernameDisplayLabel" alignment="CENTER_RIGHT" layoutX="666.0" layoutY="19.0" prefHeight="49.0" prefWidth="294.0" text="&lt;User Name goes Here&gt;" textAlignment="CENTER" textFill="#0070c0">
+<font>
+<Font name="Segoe UI" size="18.0" />
+</font>
+</Label>
+<Label layoutX="14.0" prefHeight="49.0" prefWidth="294.0" text="Profile" textFill="#0070c0">
+<font>
+<Font name="Segoe UI" size="72.0" />
+</font>
+</Label>
+<Button fx:id="ProfileSaveButton" layoutX="27.0" layoutY="560.0" onAction="#saveButtonPressed" prefHeight="35.0" prefWidth="181.0" style="-fx-background-color: #0070c0; -fx-background-radius: 0;" text="Save" textFill="WHITE">
+<font>
+<Font name="Segoe UI" size="18.0" />
+</font>
+<cursor>
+<Cursor fx:constant="HAND" />
+</cursor>
+</Button><Button fx:id="ProfileCancelButton" layoutX="215.0" layoutY="560.0" onAction="#cancelButtonPressed" prefHeight="35.0" prefWidth="181.0" style="-fx-background-color: #0070c0; -fx-background-radius: 0;" text="Cancel" textFill="WHITE">
+<font>
+<Font name="Segoe UI" size="18.0" />
+</font>
+<cursor>
+<Cursor fx:constant="HAND" />
+</cursor>
+</Button><Label alignment="CENTER_RIGHT" layoutX="-198.0" layoutY="134.0" prefHeight="49.0" prefWidth="294.0" text="Weight:" textAlignment="CENTER" textFill="#0070c0">
+<font>
+<Font name="Segoe UI" size="18.0" />
+</font>
+</Label><Label alignment="CENTER_RIGHT" layoutX="-80.0" layoutY="259.0" prefHeight="49.0" prefWidth="150.0" text="BMI:" textAlignment="CENTER" textFill="#0070c0">
+<font>
+<Font name="Segoe UI" size="18.0" />
+</font>
+</Label><Label alignment="CENTER_RIGHT" layoutX="18.0" layoutY="326.0" prefHeight="49.0" prefWidth="104.0" text="Heart Rate:" textAlignment="CENTER" textFill="#0070c0">
+<font>
+<Font name="Segoe UI" size="18.0" />
+</font>
+</Label><Label alignment="CENTER_RIGHT" layoutX="-202.0" layoutY="194.0" prefHeight="49.0" prefWidth="294.0" text="Height:" textFill="#0070c0">
+<font>
+<Font name="Segoe UI" size="18.0" />
+</font>
+</Label><TextField fx:id="weightField" focusTraversable="false" layoutX="163.0" layoutY="143.0" prefHeight="31.0" prefWidth="187.0" promptText="Weight" style="-fx-background-radius: 0;" /><TextField fx:id="heightField" focusTraversable="false" layoutX="163.0" layoutY="203.0" prefHeight="31.0" prefWidth="75.0" promptText="Height" style="-fx-background-radius: 0;" /><TextField fx:id="bmiField" focusTraversable="false" layoutX="161.0" layoutY="268.0" prefHeight="31.0" prefWidth="187.0" promptText="BMI" style="-fx-background-radius: 0;" /><TextField fx:id="restingPulseField" focusTraversable="false" layoutX="161.0" layoutY="335.0" prefHeight="31.0" prefWidth="187.0" promptText="Heart Rate" style="-fx-background-radius: 0;" /><Label alignment="CENTER_RIGHT" layoutX="235.0" layoutY="194.0" prefHeight="49.0" prefWidth="29.0" text="ft." textFill="#0070c0">
+<font>
+<Font name="Segoe UI" size="14.0" />
+</font>
+</Label><Label alignment="CENTER_RIGHT" layoutX="354.0" layoutY="194.0" prefHeight="49.0" prefWidth="29.0" text="in." textFill="#0070c0">
+<font>
+<Font name="Segoe UI" size="14.0" />
+</font>
+</Label><Label alignment="CENTER_RIGHT" layoutX="354.0" layoutY="134.0" prefHeight="49.0" prefWidth="29.0" text="lbs." textFill="#0070c0" /><Label alignment="CENTER_RIGHT" layoutX="369.0" layoutY="326.0" prefHeight="49.0" prefWidth="29.0" text="bpm" textFill="#0070c0">
+<font>
+<Font name="Segoe UI" size="14.0" />
+</font>
+</Label><TextField focusTraversable="false" layoutX="275.0" layoutY="203.0" prefHeight="31.0" prefWidth="75.0" promptText="Inches" style="-fx-background-radius: 0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" /><ImageView fx:id="UserImage" fitHeight="242.0" fitWidth="264.0" layoutX="606.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+<image>
+<Image url="@../../GenericPerson.PNG" />
+</image></ImageView>
+</children>
+</AnchorPane>
